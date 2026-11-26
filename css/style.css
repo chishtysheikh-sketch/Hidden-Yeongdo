@@ -547,6 +547,8 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before {
 .fab-chat:hover { filter: brightness(1.08); }
 .fab-chat:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
 .fab-chat[hidden] { display: none; }
+/* Tawk chat window open: hide our button so it never sits under Tawk's own close button */
+body.tawk-open .fab { display: none; }
 
 /* Chat bubbles + reply box (used by admin.html → Live chat tab) */
 .chat-send-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }

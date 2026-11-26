@@ -11,7 +11,8 @@
    10. Trip overview tabs   11. Day / night mode
    12. Copy KakaoTalk ID + floating contact button
    13. Approx. USD prices   14. FAQ search
-   15. Live chat (Tawk.to) in the floating contact menu
+   15. Live chat (Tawk.to): opened from the floating contact menu,
+       unread badge, page tag, hidden if Tawk can't load
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -575,14 +576,14 @@ function setupFaqSearch() {
    Tawk's own round bubble is hidden: the chat opens from "💬 Live chat"
    at the top of our floating contact menu (part 12). When you reply,
    the unread count appears as a badge on our 💬 button.
-   You answer chats in the Tawk.to app / dashboard.
-
-   Your embed code contains a link like
-     https://embed.tawk.to/PROPERTY_ID/WIDGET_ID
-   Copy those two parts below. While they are empty (or if Tawk is blocked,
-   e.g. by an ad blocker), the Live chat option simply stays hidden. */
-const TAWK_PROPERTY_ID = ""; // TODO: first part of the link, e.g. "65a1b2c3d4e5f6a7b8c9d0e1"
-const TAWK_WIDGET_ID = "";   // TODO: second part of the link, e.g. "1hk2abcde" (sometimes "default")
+   You answer chats in the Tawk.to app / dashboard; each chat is tagged
+   with the page the visitor is on (e.g. "Tours page").
+   Only pages with the floating contact menu load Tawk (not admin.html).
+   If Tawk is blocked (e.g. by an ad blocker) or offline, the Live chat
+   option stays hidden and Call / KakaoTalk / Email keep working.
+   Embed URL: https://embed.tawk.to/PROPERTY_ID/WIDGET_ID */
+const TAWK_PROPERTY_ID = "6b07f23e8d60633cf9bf527d";
+const TAWK_WIDGET_ID = "1k8bgkhqj";
 
 function setupTawk() {
   const option = document.querySelector(".fab-chat");
@@ -591,7 +592,14 @@ function setupTawk() {
   if (!option || !fabBtn || !badge || !TAWK_PROPERTY_ID || !TAWK_WIDGET_ID) return; // option stays hidden
 
   const LABEL = "Contact us: chat, call or KakaoTalk";
+  const OPENED_KEY = "hy-tawk-opened";
   let ready = false;
+
+  // Tawk counts its automatic greeting ("Hi! How can we help?") as unread too.
+  // So the badge only appears after the visitor has opened the chat once:
+  // then a new unread message really is your reply.
+  function hasOpened() { try { return localStorage.getItem(OPENED_KEY) === "1"; } catch (e) { return false; } }
+  function markOpened() { try { localStorage.setItem(OPENED_KEY, "1"); } catch (e) { /* private mode */ } }
 
   // Tawk reads these globals (same as in Tawk's own embed code)
   window.Tawk_API = window.Tawk_API || {};
@@ -599,7 +607,7 @@ function setupTawk() {
   const tawk = window.Tawk_API;
 
   function setUnread(count) {
-    count = parseInt(count, 10) || 0;
+    count = hasOpened() ? parseInt(count, 10) || 0 : 0;
     badge.hidden = count === 0;
     badge.textContent = count > 9 ? "9+" : String(count);
     fabBtn.setAttribute("aria-label", count
@@ -619,17 +627,28 @@ function setupTawk() {
     ready = true;
     tawk.hideWidget();
     option.hidden = false;
+    // tell Tawk which page the visitor is on: the active menu item ("Home", "Tours", "FAQ"…)
+    const current = document.querySelector('.nav-links a[aria-current="page"]');
+    const page = (current ? current.textContent : document.title.split("|")[0]).trim();
+    if (page && typeof tawk.addTags === "function") {
+      tawk.addTags([page + " page"], function (error) { if (error) console.warn("Tawk tag:", error); });
+    }
   };
+  // while the chat window is open, our 💬 button steps aside (Tawk has its own close button there)
+  tawk.onChatMaximized = function () { document.body.classList.add("tawk-open"); };
   tawk.onChatMinimized = function () {
     tawk.hideWidget();
+    document.body.classList.remove("tawk-open");
     fabBtn.focus();
   };
-  tawk.onChatHidden = function () { /* hidden by us: nothing to do */ };
+  tawk.onChatHidden = function () { document.body.classList.remove("tawk-open"); };
   tawk.onUnreadCountChanged = setUnread;
 
   option.addEventListener("click", function () {
     if (!ready) return;
+    markOpened();
     document.dispatchEvent(new Event("hy-fab-close")); // close our menu (part 12)
+    document.body.classList.add("tawk-open");
     tawk.showWidget();
     tawk.maximize();
     setUnread(0);
@@ -640,7 +659,7 @@ function setupTawk() {
     const s = document.createElement("script");
     s.async = true;
     s.src = "https://embed.tawk.to/" + encodeURIComponent(TAWK_PROPERTY_ID) + "/" + encodeURIComponent(TAWK_WIDGET_ID);
-    s.charset = "UTF-8";
+    s.setAttribute("charset", "UTF-8");   // same as Tawk's official snippet
     s.setAttribute("crossorigin", "*");
     s.onerror = failed; // blocked or offline
     document.body.appendChild(s);

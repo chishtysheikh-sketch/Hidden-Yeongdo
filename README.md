@@ -123,15 +123,17 @@ select cron.schedule('purge-old-data', '0 3 * * *', $$select public.purge_old_da
 ```
 
 ## Live chat (Tawk.to)
-1. In tawk.to: Administration → Channels → Chat Widget. Your widget code contains a link like
-   `https://embed.tawk.to/PROPERTY_ID/WIDGET_ID`.
-2. Put the two parts in `js/main.js` (part 15): `TAWK_PROPERTY_ID` and `TAWK_WIDGET_ID`.
-3. Tawk's own bubble is hidden; the chat opens from **💬 Live chat** in the floating contact menu, and a red
-   badge shows when you have replied. If Tawk can't load (e.g. ad blockers), the option is hidden and
-   Call / KakaoTalk / Email still work.
-4. Tawk's chat window colours come from the Tawk dashboard (Chat Widget → Widget Appearance): choose the site
-   teal `#1f6f78` so it matches. Install the Tawk.to app on your phone to answer chats.
-5. Tawk.to stores chats and sets cookies: mention it in your privacy policy.
+- Loaded by `js/main.js` part 15 (property `6b07f23e8d60633cf9bf527d`, widget `1k8bgkhqj`) after the page has
+  loaded, on every public page – not on admin.html.
+- Tawk's own bubble is hidden; the chat opens from **💬 Live chat** at the top of the floating contact menu.
+  While the chat window is open our 💬 button hides, so the two never overlap.
+- Each chat is tagged with the page the visitor is on (e.g. "Tours page").
+- Red badge on the 💬 button when you reply. Tawk's automatic greeting is ignored until the visitor has opened
+  the chat once (otherwise every new visitor would see a "1").
+- If Tawk can't load (ad blocker, offline), the Live chat option stays hidden; Call / KakaoTalk / Email still work.
+- Tawk's chat window colours come from the Tawk dashboard (Chat Widget → Widget Appearance): choose the site
+  teal `#1f6f78` so it matches. Answer chats in the Tawk.to app on your phone.
+- Tawk.to stores chats and sets cookies: mention it in your privacy policy.
 
 The database still has the chat tables from the earlier Supabase chat; they are unused now.
 
