@@ -1,7 +1,7 @@
 # Hidden Yeongdo – small-group tours on Yeongdo, Busan
 
 Static site for GitHub Pages (HTML + CSS + vanilla JavaScript, no build step) with a
-Supabase backend for bookings, questions and live chat.
+Supabase backend for bookings and questions, and Tawk.to for live chat.
 
 ## Pages
 - `index.html` – hero, trip overview, three destinations, sunset widget, top questions
@@ -10,7 +10,7 @@ Supabase backend for bookings, questions and live chat.
 - `gallery.html` – filterable photo gallery, lightbox, media, OpenStreetMap (Leaflet)
 - `faq.html` – common questions (accordion + search) and an "Ask your own question" form
 - `contact.html` – booking form with live estimated total, plus phone / KakaoTalk / email
-- `admin.html` – **your** dashboard: bookings, questions, live chat (not linked, `noindex`)
+- `admin.html` – **your** dashboard: bookings and questions (not linked, `noindex`)
 
 Every public page has a day/night toggle and a floating 💬 button: Live chat / Call / KakaoTalk / Email.
 
@@ -21,10 +21,10 @@ Every public page has a day/night toggle and a floating 💬 button: Live chat /
  ─────────────────                          ───────────────────────                 ──────
  GitHub Pages (static files)
    contact.html ──insert booking──────────▶ bookings  ─┐
-   faq.html     ──insert question─────────▶ questions ─┼─ Database Webhook ─▶ Edge Function ─▶ email to
-   chat widget  ◀─realtime─▶ (anonymous ──▶ conversations│   (on INSERT)        "notify"        chishtysheikh@gmail.com
-                 login, own chat only)      messages  ──┘
- admin.html     ◀─realtime─▶ (email+password login, admin only: read/update everything)
+   faq.html     ──insert question─────────▶ questions ─┴─ Database Webhook ─▶ Edge Function ─▶ email to
+                                                          (on INSERT)        "notify"        chishtysheikh@gmail.com
+ admin.html     ◀── (email+password login, admin only: read/update everything)
+ 💬 Live chat   ◀──▶ Tawk.to (you answer in the Tawk.to app)
 ```
 
 - **The anon key in `js/supabase.js` is public.** That is normal for Supabase: Row Level Security
@@ -42,7 +42,6 @@ Every public page has a day/night toggle and a floating 💬 button: Live chat /
 Files:
 ```
 js/supabase.js                    Supabase URL + anon key, loads supabase-js 2.45.4 (pinned, with integrity hash) only when needed
-js/chat.js                        live chat widget (all public pages)
 js/admin.js, css/admin.css        admin dashboard
 supabase/migrations/001_init.sql  tables, RLS policies, chat trigger, realtime, data-retention function
 supabase/functions/notify/        Edge Function: sends the notification emails via Resend
@@ -123,13 +122,25 @@ Dashboard → Database → **Extensions** → enable `pg_cron`, then in the SQL 
 select cron.schedule('purge-old-data', '0 3 * * *', $$select public.purge_old_data()$$);
 ```
 
+## Live chat (Tawk.to)
+1. In tawk.to: Administration → Channels → Chat Widget. Your widget code contains a link like
+   `https://embed.tawk.to/PROPERTY_ID/WIDGET_ID`.
+2. Put the two parts in `js/main.js` (part 15): `TAWK_PROPERTY_ID` and `TAWK_WIDGET_ID`.
+3. Tawk's own bubble is hidden; the chat opens from **💬 Live chat** in the floating contact menu, and a red
+   badge shows when you have replied. If Tawk can't load (e.g. ad blockers), the option is hidden and
+   Call / KakaoTalk / Email still work.
+4. Tawk's chat window colours come from the Tawk dashboard (Chat Widget → Widget Appearance): choose the site
+   teal `#1f6f78` so it matches. Install the Tawk.to app on your phone to answer chats.
+5. Tawk.to stores chats and sets cookies: mention it in your privacy policy.
+
+The database still has the chat tables from the earlier Supabase chat; they are unused now.
+
 ## Using admin.html
 - **Bookings**: newest first (or by tour date), filter by status, change status, add a private note,
   click the email/phone to contact the guest. The tab shows how many are new.
 - **Questions**: write an answer (reply to the guest by email – click their address), mark answered,
   **Copy as FAQ item** copies ready-made HTML for the accordion in `faq.html`.
-- **Live chat**: unread chats first, updates live. Open one to reply (Enter sends), **Close chat** when done.
-  Click **🔔 Notifications** once to get a sound + browser notification for new messages while the page is open.
+- **Live chat** tab: belongs to the earlier Supabase chat and stays empty now – answer chats in Tawk.to.
   On your phone: add `admin.html` to your home screen for quick access.
 
 ## Backups

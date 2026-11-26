@@ -11,6 +11,7 @@
    10. Trip overview tabs   11. Day / night mode
    12. Copy KakaoTalk ID + floating contact button
    13. Approx. USD prices   14. FAQ search
+   15. Live chat (Tawk.to) in the floating contact menu
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupFloatingContact();
   setupUsdPrices();
   setupFaqSearch();
+  setupTawk();
 });
 
 /* ---------- 1. Mobile menu (☰ button) ---------- */
@@ -567,4 +569,84 @@ function setupFaqSearch() {
     });
     empty.textContent = shown ? "" : "No questions match. Ask us below and we will answer by email.";
   });
+}
+
+/* ---------- 15. Live chat with Tawk.to ----------
+   Tawk's own round bubble is hidden: the chat opens from "💬 Live chat"
+   at the top of our floating contact menu (part 12). When you reply,
+   the unread count appears as a badge on our 💬 button.
+   You answer chats in the Tawk.to app / dashboard.
+
+   Your embed code contains a link like
+     https://embed.tawk.to/PROPERTY_ID/WIDGET_ID
+   Copy those two parts below. While they are empty (or if Tawk is blocked,
+   e.g. by an ad blocker), the Live chat option simply stays hidden. */
+const TAWK_PROPERTY_ID = ""; // TODO: first part of the link, e.g. "65a1b2c3d4e5f6a7b8c9d0e1"
+const TAWK_WIDGET_ID = "";   // TODO: second part of the link, e.g. "1hk2abcde" (sometimes "default")
+
+function setupTawk() {
+  const option = document.querySelector(".fab-chat");
+  const fabBtn = document.querySelector(".fab-btn");
+  const badge = document.querySelector(".fab-badge");
+  if (!option || !fabBtn || !badge || !TAWK_PROPERTY_ID || !TAWK_WIDGET_ID) return; // option stays hidden
+
+  const LABEL = "Contact us: chat, call or KakaoTalk";
+  let ready = false;
+
+  // Tawk reads these globals (same as in Tawk's own embed code)
+  window.Tawk_API = window.Tawk_API || {};
+  window.Tawk_LoadStart = new Date();
+  const tawk = window.Tawk_API;
+
+  function setUnread(count) {
+    count = parseInt(count, 10) || 0;
+    badge.hidden = count === 0;
+    badge.textContent = count > 9 ? "9+" : String(count);
+    fabBtn.setAttribute("aria-label", count
+      ? LABEL + " – " + count + " new " + (count === 1 ? "message" : "messages")
+      : LABEL);
+  }
+
+  function failed() {
+    ready = false;
+    option.hidden = true;
+    setUnread(0);
+  }
+
+  // hide Tawk's default bubble before it appears, and again whenever the chat is closed
+  tawk.onBeforeLoad = function () { tawk.hideWidget(); };
+  tawk.onLoad = function () {
+    ready = true;
+    tawk.hideWidget();
+    option.hidden = false;
+  };
+  tawk.onChatMinimized = function () {
+    tawk.hideWidget();
+    fabBtn.focus();
+  };
+  tawk.onChatHidden = function () { /* hidden by us: nothing to do */ };
+  tawk.onUnreadCountChanged = setUnread;
+
+  option.addEventListener("click", function () {
+    if (!ready) return;
+    document.dispatchEvent(new Event("hy-fab-close")); // close our menu (part 12)
+    tawk.showWidget();
+    tawk.maximize();
+    setUnread(0);
+  });
+
+  // load Tawk after the page itself, so it never slows the site down
+  function load() {
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://embed.tawk.to/" + encodeURIComponent(TAWK_PROPERTY_ID) + "/" + encodeURIComponent(TAWK_WIDGET_ID);
+    s.charset = "UTF-8";
+    s.setAttribute("crossorigin", "*");
+    s.onerror = failed; // blocked or offline
+    document.body.appendChild(s);
+    // still not ready after 20 s: keep the option hidden (it appears if Tawk loads later)
+    setTimeout(function () { if (!ready) option.hidden = true; }, 20000);
+  }
+  if (document.readyState === "complete") load();
+  else window.addEventListener("load", load);
 }

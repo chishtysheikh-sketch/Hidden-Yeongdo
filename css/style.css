@@ -4,7 +4,7 @@
    5. Cards  6. Sections & utilities  7. Timeline  8. Gallery
    9. Lightbox  10. Map  11. Forms  12. Footer  13. Responsive
    Later: contact bar & booking form, 14. Night mode, 15. FAQ,
-   16. Floating contact button
+   16. Floating contact button, 17. Live chat option (Tawk.to)
    ========================================================= */
 
 /* 1. Variables (colours come from the island: sea, coast, rust, sand) */
@@ -527,7 +527,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before {
 .faq-item h3 { font: inherit; margin: 0; }
 
 /* =========================================================
-   17. Live chat (js/chat.js) – merged with the floating contact button
+   17. Live chat option (Tawk.to, js/main.js part 15) + unread badge
    ========================================================= */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -545,42 +545,19 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before {
   padding: 0.6rem 0.8rem; border-radius: 10px; font-weight: 600;
 }
 .fab-chat:hover { filter: brightness(1.08); }
+.fab-chat:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
 .fab-chat[hidden] { display: none; }
 
-.chat-panel {
-  position: fixed; right: 1rem; bottom: 5.4rem; z-index: 160; padding: 0; /* not the normal section padding */
-  width: min(380px, calc(100vw - 2rem)); max-height: min(620px, calc(100vh - 7rem));
-  display: flex; flex-direction: column; overflow: hidden;
-  background: var(--white); color: var(--sea); border-radius: var(--radius);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3); border: 1px solid var(--sand-dark);
-}
-.chat-panel[hidden] { display: none; }
-.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.1rem; background: var(--navy); color: var(--cream); }
-.chat-head h2 { font-size: 1.3rem; margin: 0; }
-.chat-sub { font-size: 0.85rem; color: #c9d3da; }
-.chat-close { background: none; border: none; color: var(--cream); font-size: 1.3rem; cursor: pointer; padding: 0.3rem 0.5rem; border-radius: 8px; }
-.chat-close:focus-visible, .chat-send-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
-.chat-note { font-size: 0.85rem; color: var(--muted); padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--sand-dark); }
-.chat-start { padding: 1rem 1.1rem; overflow-y: auto; }
-.chat-start[hidden], .chat-body[hidden], .chat-send[hidden], .chat-closed[hidden] { display: none; }
-.chat-body { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+/* Chat bubbles + reply box (used by admin.html → Live chat tab) */
+.chat-send-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
 .chat-log { list-style: none; flex: 1; overflow-y: auto; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 200px; }
 .chat-msg { max-width: 82%; padding: 0.55rem 0.8rem; border-radius: 14px; line-height: 1.45; }
 .chat-msg p { white-space: pre-wrap; overflow-wrap: anywhere; }
 .chat-msg time { display: block; font-size: 0.72rem; opacity: 0.75; margin-top: 0.15rem; }
 .from-visitor { align-self: flex-end; background: var(--teal); color: var(--btn-text); border-bottom-right-radius: 4px; }
 .from-admin { align-self: flex-start; background: var(--sand); color: var(--sea); border-bottom-left-radius: 4px; }
-.chat-closed { padding: 0.8rem 1.1rem; color: var(--muted); border-top: 1px solid var(--sand-dark); }
-.chat-new { font: inherit; background: none; border: none; color: var(--teal); text-decoration: underline; cursor: pointer; }
 .chat-send { display: flex; gap: 0.5rem; padding: 0.7rem; border-top: 1px solid var(--sand-dark); }
 .chat-send textarea { resize: none; flex: 1; padding: 0.6rem 0.8rem; }
 .chat-send-btn { flex: none; width: 2.8rem; border: none; border-radius: 10px; background: #b4472e; color: #ffffff; font-size: 1.1rem; cursor: pointer; }
 .chat-error { font-size: 0.85rem; color: var(--rust); padding: 0 1.1rem; }
 .chat-error:not(:empty) { padding: 0.5rem 1.1rem 0.8rem; }
-
-/* phone: the chat fills the screen */
-@media (max-width: 560px) {
-  .chat-panel { inset: 0; width: 100%; max-height: none; height: 100%; height: 100dvh; border-radius: 0; border: none; }
-  body.chat-open { overflow: hidden; }
-  body.chat-open .fab { display: none; }
-}
