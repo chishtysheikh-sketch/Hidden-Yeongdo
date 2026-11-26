@@ -4,15 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact & Booking | Hidden Yeongdo</title>
-  <meta name="description" content="Book a tour or send us a question.">
+  <meta name="description" content="Book the 1-Day Hidden Yeongdo Tour or the Half-day Sunset Walk, or ask a question by form, KakaoTalk, WhatsApp, phone or email.">
+  <link rel="canonical" href="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/contact.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hidden Yeongdo">
+  <meta property="og:title" content="Contact & Booking | Hidden Yeongdo">
+  <meta property="og:description" content="Book the 1-Day Hidden Yeongdo Tour or the Half-day Sunset Walk, or ask a question by form, KakaoTalk, WhatsApp, phone or email.">
+  <meta property="og:url" content="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/contact.html">
+  <meta property="og:image" content="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/images/hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <!-- Day/night mode: set the theme before the CSS loads so there is no white flash (see js/main.js part 11) -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "day" && t !== "night") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- ===== Shared header (same on every page) ===== -->
   <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <span>Meet at Nampo Station Exit 6 · Saturdays &amp; Sundays · English &amp; Korean</span>
+        <span class="topbar-links"><a href="tel:+821043294220">010-4329-4220</a><a href="https://wa.me/821043294220" target="_blank" rel="noopener">WhatsApp</a><span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span></span>
+      </div>
+    </div>
     <nav class="nav container" aria-label="Main navigation">
       <a class="logo" href="index.html">HIDDEN YEONGDO</a>
       <ul class="nav-links">
@@ -20,9 +43,12 @@
         <li><a href="about.html">About</a></li>
         <li><a href="packages.html">Tours</a></li>
         <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
       </ul>
       <div class="nav-tools">
+        <a class="btn btn-sm" href="contact.html">Book</a>
+        <button class="theme-btn" type="button" aria-pressed="false" aria-label="Switch to night mode">🌙</button>
         <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
     </nav>
@@ -33,49 +59,96 @@
       <div class="container">
         <p class="eyebrow">Contact &amp; booking</p>
         <h1>Let's walk together</h1>
-        <p>Book a tour or ask us anything. We usually reply within 24 hours.</p>
+        <p>Send a booking request or ask us anything. We reply within 24 hours, usually much sooner on KakaoTalk or WhatsApp.</p>
       </div>
     </section>
 
     <section class="bg-photo overlay-light" style="background-image: url('images/bg-contact-body.jpg'); background-position: center 35%">
       <div class="container contact-layout">
-        <!-- novalidate: we check the fields ourselves in js/main.js (part 8) -->
-        <form id="contact-form" novalidate>
+        <!-- Sent to Formspree. novalidate: js/main.js (part 8) checks the fields and sends the form without reloading the page -->
+        <form id="contact-form" action="https://formspree.io/f/{{FORMSPREE_ID}}" method="POST" novalidate
+              data-price-adult="57000" data-price-student="46500"
+              data-price-child="32500" data-price-sunset="20000">
+          <input type="hidden" name="_subject" value="New booking request – Hidden Yeongdo">
+          <!-- spam trap: real people never see or fill this -->
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
           <div class="form-group">
             <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name">
+            <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
             <p class="error" id="name-error"></p>
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email">
-            <p class="error" id="email-error"></p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required maxlength="200">
+              <p class="error" id="email-error"></p>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp <span class="opt">(optional)</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="50">
+            </div>
           </div>
           <div class="form-group">
-            <label for="package">Package</label>
-            <select id="package" name="package">
-              <option value="">Choose a package…</option>
-              <option value="1day">1-Day Hidden Yeongdo Tour</option>
-              <option value="private">Private group tour (ask for a quote)</option>
-              <option value="question">Just a question</option>
-            </select>
-            <p class="error" id="package-error"></p>
+            <label for="kakao_id">KakaoTalk ID <span class="opt">(optional)</span></label>
+            <input id="kakao_id" name="kakao_id" type="text" maxlength="50">
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="package">Tour</label>
+              <select id="package" name="package" required>
+                <option value="">Choose a tour…</option>
+                <option value="1day">1-Day Hidden Yeongdo Tour</option>
+                <option value="sunset">Half-day Sunset Walk</option>
+                <option value="private">Private group tour (ask for a quote)</option>
+                <option value="question">Just a question</option>
+              </select>
+              <p class="error" id="package-error"></p>
+            </div>
+            <div class="form-group">
+              <label for="date">Preferred date</label>
+              <input id="date" name="date" type="date">
+              <p class="hint">Tours run on Saturdays &amp; Sundays. Other days: choose a private tour.</p>
+              <p class="error" id="date-error"></p>
+            </div>
+          </div>
+          <fieldset class="form-group guests">
+            <legend>Guests <span class="opt">(up to 10 per tour)</span></legend>
+            <div class="form-row three">
+              <div><label for="adults">Adults</label><input id="adults" name="adults" type="number" min="0" max="10" value="1" inputmode="numeric"></div>
+              <div><label for="students">Students</label><input id="students" name="students" type="number" min="0" max="10" value="0" inputmode="numeric"></div>
+              <div><label for="children">Children</label><input id="children" name="children" type="number" min="0" max="10" value="0" inputmode="numeric"></div>
+            </div>
+            <p class="error" id="guests-error"></p>
+            <p class="estimate" id="price-estimate" aria-live="polite"></p>
+          </fieldset>
           <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Preferred date, number of people, questions…"></textarea>
+            <label for="message">Message <span class="opt">(optional for bookings)</span></label>
+            <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="Questions, dietary needs, hotel area…"></textarea>
             <p class="error" id="message-error"></p>
           </div>
-          <button class="btn" type="submit">Send message</button>
+          <div class="form-group">
+            <!-- TODO: add a privacy policy page and link it here -->
+            <label class="check"><input id="consent" name="consent" type="checkbox" value="yes">
+              <span>I agree that Hidden Yeongdo stores these details to answer my request. Booking data is deleted one year after the tour.</span></label>
+            <p class="error" id="consent-error"></p>
+          </div>
+          <button class="btn" type="submit">Send booking request</button>
+          <p class="form-note">No payment now. We confirm availability first, then send payment details. See <a href="packages.html#booking-terms">how booking works</a>.</p>
           <p class="success" id="form-success" role="status"></p>
         </form>
 
         <aside class="info-box">
-          <h2>Visit us</h2>
-          <p><strong>Address</strong><br>[Address], Yeongdo-gu, Busan</p>
-          <p><strong>Phone</strong><br>051-000-0000</p>
-          <p><strong>Email</strong><br><a href="mailto:hello@hiddenyeongdo.kr">hello@hiddenyeongdo.kr</a></p>
-          <p><strong>Business hours</strong><br>Mon–Sat 09:00–18:00<br>Sunday: tours only</p>
+          <h2>Talk to us</h2>
+          <p><strong>KakaoTalk</strong><br><span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span></p>
+          <p><strong>WhatsApp</strong><br><a href="https://wa.me/821043294220" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
+          <p><strong>Phone</strong><br><a href="tel:+821043294220">010-4329-4220</a></p>
+          <p><strong>Email</strong><br><a href="mailto:chishtysheikh@gmail.com">chishtysheikh@gmail.com</a></p>
+          <hr>
+          <p><strong>Meeting point</strong><br>Nampo Station Exit 6, Line 1, Busan<br><a href="https://map.naver.com/p/search/%EB%82%A8%ED%8F%AC%EC%97%AD%206%EB%B2%88%EC%B6%9C%EA%B5%AC" target="_blank" rel="noopener">Open in Naver Map →</a></p>
+          <p><strong>Tours run</strong><br>Saturdays &amp; Sundays</p>
+          <p><strong>Languages</strong><br>English, Korean</p>
+          <p class="opt">We have no office. All tours start at the meeting point.</p>
         </aside>
       </div>
     </section>
@@ -86,19 +159,35 @@
     <div class="container footer-grid">
       <div>
         <a class="logo" href="index.html">HIDDEN YEONGDO</a>
-        <p>One island. Three hidden faces of Busan.</p>
+        <p>Small-group walking tours on Yeongdo island, Busan.</p>
+        <p>Guided in English &amp; Korean.</p>
+        <p><a href="faq.html">Common questions (FAQ)</a> · <a href="packages.html#booking-terms">Booking terms</a></p>
       </div>
       <div>
-        <p>[Address], Yeongdo-gu, Busan</p>
-        <p>051-000-0000 · <a href="mailto:hello@hiddenyeongdo.kr">hello@hiddenyeongdo.kr</a></p>
+        <p><strong>Meeting point</strong><br><a href="https://map.naver.com/p/search/%EB%82%A8%ED%8F%AC%EC%97%AD%206%EB%B2%88%EC%B6%9C%EA%B5%AC" target="_blank" rel="noopener">Nampo Station Exit 6 (Line 1), Busan</a></p>
+        <p><strong>Tours run</strong><br>Saturdays &amp; Sundays</p>
       </div>
       <div>
-        <p>Mon–Sat 09:00–18:00</p>
-        <p>&copy; <span id="year">2026</span> Hidden Yeongdo · Student project</p>
+        <p><a href="tel:+821043294220">010-4329-4220</a><br><a href="mailto:chishtysheikh@gmail.com">chishtysheikh@gmail.com</a></p>
+        <p class="footer-social"><span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span><a href="https://wa.me/821043294220" target="_blank" rel="noopener">WhatsApp</a></p>
+        <p>&copy; <span id="year">2026</span> Hidden Yeongdo</p>
       </div>
     </div>
   </footer>
 
+  <!-- Floating contact button (js/main.js part 12) + live chat (js/chat.js) -->
+  <div class="fab">
+    <div class="fab-menu" id="fab-menu" hidden>
+      <button type="button" class="fab-chat" hidden>💬 Live chat</button>
+      <a href="tel:+821043294220">📞 Call 010-4329-4220</a>
+      <div>💬 <span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span></div>
+      <a href="mailto:chishtysheikh@gmail.com">✉️ Email us</a>
+    </div>
+    <button class="fab-btn" type="button" aria-expanded="false" aria-controls="fab-menu" aria-label="Contact us: chat, call or KakaoTalk"><span class="fab-icon" aria-hidden="true">💬</span><span class="fab-badge" hidden></span></button>
+  </div>
+
+  <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
 </body>
 </html>

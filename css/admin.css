@@ -1,0 +1,81 @@
+/* =========================================================
+   Hidden Yeongdo – admin dashboard (admin.html only)
+   Uses the colour variables from style.css, so day/night mode works here too.
+   ========================================================= */
+.admin { min-height: 100vh; }
+.admin-main { padding: 1.5rem 0 4rem; }
+.admin-tag { font-size: 0.7rem; background: var(--sand-dark); color: var(--sea); padding: 0.1rem 0.5rem; border-radius: 999px; letter-spacing: 0.05em; vertical-align: middle; }
+.admin-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.4rem; }
+.login-card { max-width: 420px; margin: 3rem auto; }
+.login-card h1, #no-access h1 { font-size: 2rem; margin-bottom: 1rem; }
+#no-access { max-width: 420px; margin: 3rem auto; }
+.admin-msg { min-height: 1.4em; color: var(--teal); font-weight: 600; }
+.admin-msg.is-error { color: var(--rust); }
+.btn-ghost { background: none; color: var(--sea); border: 2px solid var(--sand-dark); }
+.btn-ghost:hover { background: var(--sand); }
+[data-theme="night"] .btn-ghost { background: none; color: var(--sea); }
+[data-theme="night"] .btn-ghost:hover { background: var(--sand); }
+
+.admin-tabs { margin-top: 0; }
+.admin-tabs .count { font-size: 0.8rem; background: #b4472e; color: #ffffff; border-radius: 999px; padding: 0.05rem 0.5rem; margin-left: 0.3rem; }
+.admin-tabs .count:empty { display: none; }
+.admin-panel { padding: 0; }
+.admin-toolbar { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: end; margin-bottom: 1rem; }
+.admin-toolbar label { font-weight: 600; font-size: 0.9rem; }
+.admin-toolbar select { width: auto; padding: 0.45rem 0.7rem; margin-top: 0.2rem; display: block; }
+
+.admin-list { display: grid; gap: 0.9rem; }
+.item { border-left: 5px solid var(--sand-dark); }
+.item.status-new { border-left-color: #b4472e; }
+.item.status-confirmed, .item.status-answered { border-left-color: var(--teal); }
+.item-top { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.item-meta, .item-contact, .item-when { font-size: 0.92rem; margin-top: 0.3rem; }
+.item-when { color: var(--muted); font-size: 0.82rem; }
+.item-text { margin-top: 0.6rem; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--sand); padding: 0.6rem 0.8rem; border-radius: 10px; }
+.item-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: end; margin-top: 0.8rem; }
+.item-actions label { font-size: 0.85rem; font-weight: 600; }
+.item-actions select { width: auto; display: block; padding: 0.4rem 0.6rem; }
+.item-actions .grow { flex: 1; min-width: 200px; }
+.item-actions textarea { display: block; padding: 0.4rem 0.6rem; resize: vertical; }
+.q-answer-label { display: block; margin-top: 0.8rem; font-size: 0.85rem; }
+.q-answer-label textarea { margin-top: 0.2rem; }
+.pill { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--sand-dark); color: var(--sea); }
+.pill-new { background: #b4472e; color: #ffffff; }
+.pill-confirmed, .pill-answered { background: var(--teal); color: var(--btn-text); }
+
+/* Live chat: list + conversation side by side (phone: one at a time) */
+.chat-admin { display: grid; grid-template-columns: 300px 1fr; gap: 1rem; min-height: 60vh; }
+.conv-list-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow-y: auto; max-height: 75vh; }
+.conv-list { list-style: none; }
+.conv-item {
+  width: 100%; text-align: left; font: inherit; color: var(--sea); background: none; cursor: pointer;
+  border: none; border-bottom: 1px solid var(--sand-dark); padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.1rem;
+}
+.conv-item:hover, .conv-item.active { background: var(--sand); }
+.conv-item.unread .conv-name { font-weight: 700; }
+.conv-item.closed { opacity: 0.7; }
+.conv-time { font-size: 0.8rem; color: var(--muted); }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #b4472e; margin-right: 0.4rem; }
+.conv-view { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column; max-height: 75vh; }
+.conv-view[hidden] { display: none; }
+.conv-head { display: flex; gap: 0.8rem; align-items: center; padding: 0.8rem 1rem; border-bottom: 1px solid var(--sand-dark); }
+.conv-who { flex: 1; font-size: 0.92rem; }
+.conv-back { display: none; font-size: 1.3rem; background: none; border: none; color: var(--sea); cursor: pointer; }
+.admin-log { min-height: 300px; }
+.conv-empty { color: var(--muted); padding: 1rem; }
+.chat-admin .conv-empty[hidden] { display: none; }
+#admin-send[hidden] { display: none; }
+
+@media (max-width: 760px) {
+  .chat-admin { grid-template-columns: 1fr; }
+  .chat-admin > .conv-empty { display: none; }
+  .chat-admin.viewing .conv-list-wrap { display: none; }
+  .conv-back { display: block; }
+  .conv-view { max-height: none; height: calc(100dvh - 15rem); min-height: 380px; }
+  .admin-tabs { flex-wrap: nowrap; gap: 0; }
+  .admin-tabs .tab { padding: 0.6rem 0.55rem; font-size: 0.92rem; white-space: nowrap; }
+  .admin-tabs .count { margin-left: 0.15rem; padding: 0.05rem 0.4rem; }
+  .admin .nav { gap: 0.5rem; }
+  .admin-main { width: 94%; }
+  .nav-tools #notify-btn { padding: 0.4rem 0.7rem; }
+}

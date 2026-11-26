@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/sitemap.xml

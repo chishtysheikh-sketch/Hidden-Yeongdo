@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+# Supabase CLI local files (link info, local secrets) – never commit
+supabase/.temp/
+supabase/.branches/
+supabase/functions/.env
+.env
+.env.*

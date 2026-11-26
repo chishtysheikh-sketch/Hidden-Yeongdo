@@ -3,16 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1-Day Tour | Hidden Yeongdo</title>
-  <meta name="description" content="Hour-by-hour itinerary, price and booking for the 1-Day Hidden Yeongdo Tour.">
+  <title>Tours &amp; Prices | Hidden Yeongdo</title>
+  <meta name="description" content="Prices, departure days and hour-by-hour itinerary for the 1-Day Hidden Yeongdo Tour and the Half-day Sunset Walk, starting at Nampo Station, Busan.">
+  <link rel="canonical" href="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hidden Yeongdo">
+  <meta property="og:title" content="Tours &amp; Prices | Hidden Yeongdo">
+  <meta property="og:description" content="Prices, departure days and hour-by-hour itinerary for the 1-Day Hidden Yeongdo Tour and the Half-day Sunset Walk, starting at Nampo Station, Busan.">
+  <meta property="og:url" content="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html">
+  <meta property="og:image" content="https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/images/hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <!-- Day/night mode: set the theme before the CSS loads so there is no white flash (see js/main.js part 11) -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "day" && t !== "night") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TouristTrip",
+        "name": "1-Day Hidden Yeongdo Tour",
+        "description": "Small-group walking tour of Yeongdo island, Busan: Jeoryeong Coastal Walk, Bongnaesan Mountain and Gamji Beach at sunset. 09:30–18:00, from Nampo Station Exit 6.",
+        "touristType": ["Hikers", "Nature lovers", "Food lovers"],
+        "availableLanguage": ["English", "Korean"],
+        "itinerary": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "item": {"@type": "TouristAttraction", "name": "Jeoryeong Coastal Walk"}},
+            {"@type": "ListItem", "position": 2, "item": {"@type": "TouristAttraction", "name": "Bongnaesan Mountain"}},
+            {"@type": "ListItem", "position": 3, "item": {"@type": "TouristAttraction", "name": "Gamji Beach"}}
+          ]
+        },
+        "offers": [
+          {"@type": "Offer", "name": "Adult", "price": "57000", "priceCurrency": "KRW", "url": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html#full-day"},
+          {"@type": "Offer", "name": "Student", "price": "46500", "priceCurrency": "KRW", "url": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html#full-day"},
+          {"@type": "Offer", "name": "Child", "price": "32500", "priceCurrency": "KRW", "url": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html#full-day"}
+        ],
+        "provider": {"@id": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/#business"}
+      },
+      {
+        "@type": "TouristTrip",
+        "name": "Half-day Sunset Walk",
+        "description": "About 3 hours from Nampo Station Exit 6 to Gamji Beach on Yeongdo, Busan, ending at sunset.",
+        "availableLanguage": ["English", "Korean"],
+        "offers": {"@type": "Offer", "price": "20000", "priceCurrency": "KRW", "url": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/packages.html#sunset-walk"},
+        "provider": {"@id": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/#business"}
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- ===== Shared header (same on every page) ===== -->
   <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <span>Meet at Nampo Station Exit 6 · Saturdays &amp; Sundays · English &amp; Korean</span>
+        <span class="topbar-links"><a href="tel:+821043294220">010-4329-4220</a><a href="https://wa.me/821043294220" target="_blank" rel="noopener">WhatsApp</a><span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span></span>
+      </div>
+    </div>
     <nav class="nav container" aria-label="Main navigation">
       <a class="logo" href="index.html">HIDDEN YEONGDO</a>
       <ul class="nav-links">
@@ -20,9 +79,12 @@
         <li><a href="about.html">About</a></li>
         <li><a href="packages.html" class="active" aria-current="page">Tours</a></li>
         <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-tools">
+        <a class="btn btn-sm" href="contact.html">Book</a>
+        <button class="theme-btn" type="button" aria-pressed="false" aria-label="Switch to night mode">🌙</button>
         <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
     </nav>
@@ -32,21 +94,32 @@
     <section class="page-hero" style="background-image: url('images/bg-packages.jpg')">
       <div class="container">
         <p class="eyebrow">Tour packages</p>
-        <h1>1-Day Hidden Yeongdo Tour</h1>
-        <p>Cliffs in the morning, a summit at noon and a pebble beach at sunset.</p>
+        <h1>Tours &amp; prices</h1>
+        <p>A full day across the whole island, or a short walk to the sunset. Both start at Nampo Station Exit 6.</p>
       </div>
     </section>
 
     <section class="bg-photo overlay-light" style="background-image: url('images/bg-tour-body.jpg')">
       <div class="container">
-        <div class="package-head">
+        <div class="package-head" id="full-day">
           <div>
             <h2 style="margin:0">1-Day Hidden Yeongdo Tour</h2>
-            <p>09:30 – 18:00 · 3 destinations · max 10 people</p>
+            <p>Saturdays &amp; Sundays · 09:30 – 18:00 · 3 destinations · max 10 people · English / Korean</p>
           </div>
-          <p class="price">[₩__,000] <small style="font-size:1rem;color:#5e6e78">/ person</small></p>
-          <a class="btn" href="contact.html">Book this tour</a>
+          <p class="price">from ₩32,500 <small class="price-unit">/ person</small></p>
+          <a class="btn" href="contact.html?package=1day">Book this tour</a>
         </div>
+
+        <!-- Price table. The "approx. US$" amounts are calculated in js/main.js (part 13, KRW_PER_USD) -->
+        <table class="price-table">
+          <caption>Prices per person · 1-Day Hidden Yeongdo Tour</caption>
+          <thead><tr><th scope="col">Guest</th><th scope="col">Price</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Adult</th><td><span class="price">₩57,000</span> <small class="usd" data-krw="57000"></small></td></tr>
+            <tr><th scope="row">Student<small>valid student ID required</small></th><td><span class="price">₩46,500</span> <small class="usd" data-krw="46500"></small></td></tr>
+            <tr><th scope="row">Child<small>age 6–12</small></th><td><span class="price">₩32,500</span> <small class="usd" data-krw="32500"></small></td></tr>
+          </tbody>
+        </table>
 
         <div class="package-layout">
           <!-- Timeline: click a stop to see details (see js/main.js, part 4) -->
@@ -96,8 +169,51 @@
             <ul><li>Bus fares (T-money)</li><li>Café drinks &amp; shopping</li></ul>
             <h3>What to bring</h3>
             <ul><li>Comfortable shoes</li><li>Hat and sunscreen</li></ul>
-            <a class="btn" href="contact.html" style="width:100%;text-align:center">Book now</a>
+            <h3>Meeting point</h3>
+            <p><a href="https://map.naver.com/p/search/%EB%82%A8%ED%8F%AC%EC%97%AD%206%EB%B2%88%EC%B6%9C%EA%B5%AC" target="_blank" rel="noopener">Nampo Station Exit 6 (Line 1)</a> at 09:30</p>
+            <a class="btn" href="contact.html?package=1day" style="width:100%;text-align:center;margin-top:1rem">Book now</a>
           </aside>
+        </div>
+
+        <!-- Half-day sunset walk -->
+        <div class="package-head" id="sunset-walk" style="margin-top:3rem">
+          <div>
+            <h2 style="margin:0">Half-day Sunset Walk</h2>
+            <p>Saturdays &amp; Sundays · about 3 hours, ending at sunset · max 10 people · English / Korean</p>
+          </div>
+          <p class="price">₩20,000 <small class="price-unit">/ person</small> <small class="usd" data-krw="20000"></small></p>
+          <a class="btn" href="contact.html?package=sunset">Book this walk</a>
+        </div>
+        <div class="package-layout">
+          <div class="side-box">
+            <!-- TODO: confirm this Half-day Sunset Walk plan (route, length, start time) -->
+            <p>Short on time? Meet at Nampo Station Exit 6 in the late afternoon, ride the local bus across the island and walk the seaside promenade to Gamji Beach for the sunset. We bring water and some snacks; grilled-clam dinner by the beach is optional and paid on the spot.</p>
+            <p style="margin-top:0.8rem">The start time follows the sunset, about 2½ hours before it, so it changes with the season. We confirm the exact time when we confirm your booking.</p>
+          </div>
+          <aside class="side-box">
+            <h3 class="inc">✓ Included</h3>
+            <ul><li>Local guide (EN / KO)</li><li>Bottled water</li><li>Some snacks</li></ul>
+            <h3 class="exc">✕ Not included</h3>
+            <ul><li>Bus fares (T-money)</li><li>Dinner &amp; other drinks</li></ul>
+          </aside>
+        </div>
+
+        <!-- Booking terms -->
+        <div class="side-box policy" id="booking-terms" style="margin-top:3rem">
+          <h2>How booking works</h2>
+          <ol>
+            <li><strong>Send a request</strong> using the <a href="contact.html">booking form</a>, KakaoTalk or WhatsApp. Tell us your date and the number of adults, students and children.</li>
+            <li><strong>We confirm within 24 hours</strong> and send the payment details and meeting instructions. You can pay by <strong>bank transfer, cash or card</strong>.</li>
+            <li><strong>Meet your guide</strong> at Nampo Station Exit 6 (Line 1).</li>
+          </ol>
+          <ul>
+            <!-- TODO: if you want a minimum group size, add it here (e.g. "Tours need at least 2 guests") -->
+            <li>Tours take at most 10 guests. If a tour cannot run (for example too few guests), we offer you another date or a full refund.</li>
+            <li>Student price: please bring a valid student ID.</li>
+            <li>If the weather is unsafe we change the route or move your tour to another date. If neither works for you, you get a full refund.</li>
+            <li>Need to cancel? Please let us know at least 24 hours before the tour.</li>
+            <li>Private groups and other days are possible. <a href="contact.html?package=private">Ask for a quote</a>.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -106,7 +222,7 @@
       <div class="container">
         <h2>Questions about the route?</h2>
         <p>Private groups and other dates are possible. Just ask.</p>
-        <a class="btn" href="contact.html">Contact us</a>
+        <a class="btn" href="contact.html?package=question">Contact us</a>
       </div>
     </section>
   </main>
@@ -116,19 +232,35 @@
     <div class="container footer-grid">
       <div>
         <a class="logo" href="index.html">HIDDEN YEONGDO</a>
-        <p>One island. Three hidden faces of Busan.</p>
+        <p>Small-group walking tours on Yeongdo island, Busan.</p>
+        <p>Guided in English &amp; Korean.</p>
+        <p><a href="faq.html">Common questions (FAQ)</a> · <a href="packages.html#booking-terms">Booking terms</a></p>
       </div>
       <div>
-        <p>[Address], Yeongdo-gu, Busan</p>
-        <p>051-000-0000 · <a href="mailto:hello@hiddenyeongdo.kr">hello@hiddenyeongdo.kr</a></p>
+        <p><strong>Meeting point</strong><br><a href="https://map.naver.com/p/search/%EB%82%A8%ED%8F%AC%EC%97%AD%206%EB%B2%88%EC%B6%9C%EA%B5%AC" target="_blank" rel="noopener">Nampo Station Exit 6 (Line 1), Busan</a></p>
+        <p><strong>Tours run</strong><br>Saturdays &amp; Sundays</p>
       </div>
       <div>
-        <p>Mon–Sat 09:00–18:00</p>
-        <p>&copy; <span id="year">2026</span> Hidden Yeongdo · Student project</p>
+        <p><a href="tel:+821043294220">010-4329-4220</a><br><a href="mailto:chishtysheikh@gmail.com">chishtysheikh@gmail.com</a></p>
+        <p class="footer-social"><span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span><a href="https://wa.me/821043294220" target="_blank" rel="noopener">WhatsApp</a></p>
+        <p>&copy; <span id="year">2026</span> Hidden Yeongdo</p>
       </div>
     </div>
   </footer>
 
+  <!-- Floating contact button (js/main.js part 12) + live chat (js/chat.js) -->
+  <div class="fab">
+    <div class="fab-menu" id="fab-menu" hidden>
+      <button type="button" class="fab-chat" hidden>💬 Live chat</button>
+      <a href="tel:+821043294220">📞 Call 010-4329-4220</a>
+      <div>💬 <span class="kakao">KakaoTalk ID: <strong>chishty</strong> <button type="button" class="copy-btn" data-copy="chishty">Copy ID</button></span></div>
+      <a href="mailto:chishtysheikh@gmail.com">✉️ Email us</a>
+    </div>
+    <button class="fab-btn" type="button" aria-expanded="false" aria-controls="fab-menu" aria-label="Contact us: chat, call or KakaoTalk"><span class="fab-icon" aria-hidden="true">💬</span><span class="fab-badge" hidden></span></button>
+  </div>
+
+  <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
 </body>
 </html>

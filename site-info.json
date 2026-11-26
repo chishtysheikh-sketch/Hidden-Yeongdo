@@ -1,0 +1,14 @@
+{
+  "_help": "Fill in the empty values, then run:  python3 tools/fill-info.py   (you can run it again later for fields you fill in later)",
+  "email": "chishtysheikh@gmail.com",
+  "phone": "010-4329-4220",
+  "kakao": "chishty",
+  "whatsapp": "+82 10-4329-4220",
+  "naver_map_url": "https://map.naver.com/p/search/%EB%82%A8%ED%8F%AC%EC%97%AD%206%EB%B2%88%EC%B6%9C%EA%B5%AC",
+  "formspree_id": "",
+  "price_adult": "57000",
+  "price_child": "32500",
+  "price_student": "46500",
+  "departure_days": "Saturdays & Sundays",
+  "site_url": "https://chishtysheikh-sketch.github.io/Hidden-Yeongdo/"
+}

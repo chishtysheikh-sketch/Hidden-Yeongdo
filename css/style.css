@@ -3,6 +3,8 @@
    Sections: 1. Variables  2. Base  3. Header/Nav  4. Hero
    5. Cards  6. Sections & utilities  7. Timeline  8. Gallery
    9. Lightbox  10. Map  11. Forms  12. Footer  13. Responsive
+   Later: contact bar & booking form, 14. Night mode, 15. FAQ,
+   16. Floating contact button
    ========================================================= */
 
 /* 1. Variables (colours come from the island: sea, coast, rust, sand) */
@@ -19,6 +21,12 @@
   --max: 1160px;
   --font-head: "DM Serif Display", Georgia, serif;
   --font-body: "Inter", Arial, sans-serif;
+  /* these two never change with the theme: dark photo bands, footer, top bar */
+  --navy: #13293d;
+  --cream: #f4efe6;
+  --input-border: #c9c1b3;
+  --btn-text: #ffffff;
+  color-scheme: light;
 }
 
 /* 2. Base */
@@ -61,25 +69,25 @@ h3 { font-size: 1.5rem; }
 
 /* 4. Hero */
 .hero {
-  min-height: 78vh; display: flex; align-items: center; color: var(--sand);
+  min-height: 78vh; display: flex; align-items: center; color: var(--cream);
   background: linear-gradient(120deg, rgba(19,41,61,0.92), rgba(31,111,120,0.75)),
               url("../images/hero-blur.jpg") center / cover;
 }
 .hero p { font-size: 1.25rem; max-width: 560px; margin: 1rem 0 2rem; }
 .hero .eyebrow { color: #e89a7e; }
-.page-hero { padding: 4.5rem 0 3rem; background: var(--sea); color: var(--sand); }
+.page-hero { padding: 4.5rem 0 3rem; background: var(--navy); color: var(--cream); }
 .page-hero .eyebrow { color: #e89a7e; }
 .page-hero p { max-width: 640px; color: #c9d3da; }
 
 /* Buttons */
 .btn {
-  display: inline-block; background: var(--rust); color: var(--white);
+  display: inline-block; background: var(--rust); color: var(--btn-text);
   padding: 0.85rem 1.8rem; border-radius: 999px; text-decoration: none;
   font-weight: 600; border: none; font: inherit; font-weight: 600; cursor: pointer;
   transition: transform 0.2s, background 0.2s;
 }
 .btn:hover { transform: translateY(-2px); background: #9b3a24; }
-.btn-outline { background: none; border: 2px solid var(--sand); }
+.btn-outline { background: none; border: 2px solid var(--cream); }
 
 /* 5. Cards (destinations, values, team) */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
@@ -109,7 +117,7 @@ section { padding: 4.5rem 0; }
 .team .card-body { text-align: center; }
 .value-icon { font-size: 2rem; }
 .sunset-box {
-  background: var(--sea); color: var(--sand); border-radius: var(--radius);
+  background: var(--navy); color: var(--cream); border-radius: var(--radius);
   padding: 1.4rem 1.6rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
 }
 .sunset-box strong { color: #e89a7e; font-size: 1.4rem; }
@@ -158,7 +166,7 @@ section { padding: 4.5rem 0; }
 .gallery-item:hover img { transform: scale(1.05); }
 .gallery-item.hide { display: none; }
 .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: 2.5rem; }
-.media-card { background: var(--sea); color: var(--sand); border-radius: var(--radius); padding: 1.4rem; }
+.media-card { background: var(--navy); color: var(--cream); border-radius: var(--radius); padding: 1.4rem; }
 .media-card video, .media-card audio { width: 100%; margin-top: 0.8rem; }
 .media-card .soon { margin-top: 0.8rem; font-size: 0.9rem; color: #c9d3da; }
 
@@ -169,9 +177,9 @@ section { padding: 4.5rem 0; }
 }
 .lightbox.open { display: flex; }
 .lightbox img { max-height: 78vh; border-radius: 10px; }
-.lightbox p { color: var(--sand); }
+.lightbox p { color: var(--cream); }
 .lb-btn {
-  position: absolute; background: none; border: none; color: var(--sand);
+  position: absolute; background: none; border: none; color: var(--cream);
   font-size: 2.4rem; cursor: pointer; padding: 0.5rem 1rem;
 }
 .lb-close { top: 1rem; right: 1.2rem; }
@@ -187,7 +195,7 @@ section { padding: 4.5rem 0; }
 label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
 input, select, textarea {
   width: 100%; padding: 0.75rem 0.9rem; font: inherit; color: var(--sea);
-  border: 2px solid #c9c1b3; border-radius: 10px; background: var(--white);
+  border: 2px solid var(--input-border); border-radius: 10px; background: var(--white);
 }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); }
 .invalid { border-color: var(--rust); }
@@ -201,9 +209,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .info-box p { margin-bottom: 0.8rem; }
 
 /* 12. Footer */
-.site-footer { background: var(--sea); color: #c9d3da; padding: 2.5rem 0; }
+.site-footer { background: var(--navy); color: #c9d3da; padding: 2.5rem 0; }
 .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; }
-.site-footer a { color: var(--sand); }
+.site-footer a { color: var(--cream); }
 .site-footer .logo { color: #e89a7e; }
 
 /* 13. Responsive: tablet and mobile */
@@ -257,7 +265,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .card .avatar-img { width: 110px; height: 110px; aspect-ratio: 1 / 1; }
 
 /* Founder section: blurred photo background with a dark overlay */
-.founder-section { position: relative; background-size: cover; background-position: center; color: var(--sand); }
+.founder-section { position: relative; background-size: cover; background-position: center; color: var(--cream); }
 .founder-section::before {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(19,41,61,0.15), rgba(19,41,61,0.75));
@@ -275,7 +283,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .bg-photo::before { content: ""; position: absolute; inset: 0; }
 .bg-photo > .container { position: relative; } /* keep content above the layer */
 .overlay-dark::before { background: linear-gradient(120deg, rgba(19,41,61,0.85), rgba(31,111,120,0.6)); }
-.overlay-dark, .overlay-dark p { color: var(--sand); }
+.overlay-dark, .overlay-dark p { color: var(--cream); }
 .overlay-dark .eyebrow { color: #e89a7e; }
 .overlay-dark .sunset-box { background: rgba(19,41,61,0.75); backdrop-filter: blur(4px); }
 .overlay-light::before { background: linear-gradient(180deg, rgba(244,239,230,0.72) 0%, rgba(244,239,230,0.45) 100%); }
@@ -291,7 +299,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 
 /* Night bokeh backgrounds: heavily blurred night photos = soft glowing lights */
 .overlay-night::before { background: radial-gradient(ellipse at 30% 20%, rgba(19,41,61,0.25), rgba(19,41,61,0.7)); }
-.overlay-night .section-head, .overlay-night .section-head h2 { color: var(--sand); }
+.overlay-night .section-head, .overlay-night .section-head h2 { color: var(--cream); }
 .overlay-night .eyebrow { color: #f0a88c; }
 .overlay-night .section-head p { color: #dfe6ea; }
 
@@ -358,3 +366,221 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 }
 /* Our story photo: keep tall phone photos from stretching the section */
 .story img { width: 100%; max-height: 520px; object-fit: cover; }
+
+/* =========================================================
+   Contact bar, booking form, prices, policies
+   ========================================================= */
+.topbar { background: var(--navy); color: #c9d3da; font-size: 0.85rem; }
+.topbar-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1rem; padding: 0.4rem 0; }
+.topbar a { color: var(--cream); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.topbar-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-sm { padding: 0.45rem 1.1rem; font-size: 0.95rem; }
+.footer-social { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+
+.price-list { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+.price-list dt { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.price-list dd { margin: 0; }
+
+.policy h2 { font-size: 1.8rem; }
+.policy ol, .policy ul { padding-left: 1.3rem; margin-top: 0.8rem; }
+.policy li { margin-bottom: 0.5rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.form-row.three { grid-template-columns: repeat(3, 1fr); }
+fieldset.guests { border: none; }
+fieldset.guests legend { font-weight: 600; margin-bottom: 0.3rem; }
+fieldset.guests label { font-weight: 500; font-size: 0.9rem; }
+.opt, .hint, .form-note { color: var(--muted); font-weight: 400; font-size: 0.9rem; }
+.hint { margin-top: 0.2rem; }
+.form-note { margin-top: 0.8rem; }
+.estimate { font-weight: 600; color: var(--teal); min-height: 1.2em; }
+.success.is-error { background: var(--rust); }
+.success a { color: var(--white); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.info-box hr { border: none; border-top: 1px solid var(--sand-dark); margin: 1rem 0; }
+button[disabled] { opacity: 0.6; cursor: wait; }
+
+@media (max-width: 640px) {
+  .form-row, .form-row.three { grid-template-columns: 1fr; }
+  .topbar-inner > span:first-child { display: none; }
+  .topbar-inner { justify-content: center; }
+}
+
+/* Price table (packages page) */
+.price-unit { font-size: 1rem; font-weight: 400; color: var(--muted); }
+.price-table {
+  width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 2rem;
+}
+.price-table caption { text-align: left; font-weight: 700; padding: 0 0 0.6rem; }
+.price-table th, .price-table td { text-align: left; padding: 0.9rem 1.4rem; border-top: 1px solid var(--sand-dark); }
+.price-table thead th { border-top: none; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.price-table th small { display: block; font-weight: 400; color: var(--muted); }
+.price-table .price { font-size: 1.3rem; }
+.usd { color: var(--muted); margin-left: 0.4rem; }
+.estimate-note { color: var(--muted); font-weight: 400; font-size: 0.9rem; }
+
+/* KakaoTalk ID + Copy button */
+.copy-btn {
+  font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-left: 0.3rem;
+  padding: 0.1rem 0.6rem; border-radius: 999px; border: 1px solid currentColor; background: none; color: inherit;
+}
+.copy-btn.copied { background: var(--teal); border-color: var(--teal); color: var(--btn-text); }
+
+/* =========================================================
+   14. Night mode
+   <html data-theme="night"> is set by the small script in each page's <head>
+   (before the CSS loads, so there is no white flash) and by the toggle (js part 11).
+   ========================================================= */
+.theme-btn {
+  border: 2px solid var(--sea); background: none; color: var(--sea); cursor: pointer;
+  border-radius: 999px; width: 2.4rem; height: 2.4rem; font-size: 1.1rem; line-height: 1;
+  display: grid; place-items: center;
+}
+.theme-btn:focus-visible, .menu-btn:focus-visible, .copy-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+[data-theme="night"] {
+  --sea: #ece5d8;          /* main text: light sand */
+  --teal: #5cc0c9;
+  --rust: #ee8f74;         /* lighter rust so text stays readable on navy */
+  --sand: #0e1e2c;         /* page background */
+  --sand-dark: #2b4357;    /* borders, chips */
+  --muted: #a9b9c4;
+  --white: #172c40;        /* cards, header, boxes */
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  --input-border: #3f5a70;
+  --btn-text: #0e1e2c;
+  color-scheme: dark;      /* dark scrollbars, date picker and select menus */
+}
+[data-theme="night"] .btn { background: #b4472e; color: #ffffff; }   /* buttons keep the day rust + white text */
+[data-theme="night"] .btn:hover { background: #c95a3f; }
+[data-theme="night"] .overlay-light::before { background: linear-gradient(180deg, rgba(14,30,44,0.86) 0%, rgba(14,30,44,0.7) 100%); }
+[data-theme="night"] .overlay-light .section-head h2,
+[data-theme="night"] .overlay-light .section-head .eyebrow { text-shadow: 0 1px 12px rgba(14,30,44,0.9); }
+[data-theme="night"] .overlay-dark .card p { color: var(--muted); }
+[data-theme="night"] .trip-map .land { fill: #24394d; stroke: var(--sand); }
+[data-theme="night"] .trip-map .land-main { fill: #1d3245; }
+[data-theme="night"] .trip-map .map-area { fill: #6f8597; }
+[data-theme="night"] .trip-map .map-label { fill: #c9d3da; }
+[data-theme="night"] .trip-map .stop-dot { fill: var(--white); }
+[data-theme="night"] .trip-map .pin-ring { fill: rgba(92,192,201,0.2); }
+/* Leaflet: darken the map tiles, keep markers and popups as they are */
+[data-theme="night"] #map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
+[data-theme="night"] #map { background: #1d3245; }
+
+/* smooth colour change, only while switching (js adds .theme-anim for 400 ms) */
+html.theme-anim, html.theme-anim *, html.theme-anim *::before {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s, stroke 0.3s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim, html.theme-anim *, html.theme-anim *::before { transition: none !important; }
+}
+
+/* =========================================================
+   15. FAQ (faq.html + top questions on index.html)
+   Same look as the timeline stops.
+   ========================================================= */
+.faq-search { max-width: 520px; margin-bottom: 1.6rem; }
+.faq-list { list-style: none; }
+.faq-item { background: var(--white); border-radius: var(--radius); margin-bottom: 0.8rem; box-shadow: var(--shadow); }
+.faq-q {
+  width: 100%; display: flex; align-items: center; gap: 1rem; text-align: left; cursor: pointer;
+  background: none; border: none; font: inherit; font-weight: 700; color: inherit; padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+}
+.faq-q:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.faq-q span:first-child { flex: 1; }
+.faq-arrow { transition: transform 0.25s; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { padding: 0 1.2rem 1.2rem; color: var(--muted); }
+.faq-a[hidden] { display: none; }
+.faq-item.hide { display: none; }
+.faq-empty { color: var(--muted); }
+.faq-more { margin-top: 1.4rem; }
+.ask-box { background: var(--white); border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); max-width: 720px; margin-top: 3rem; }
+.check { display: flex; gap: 0.6rem; align-items: flex-start; font-weight: 400; }
+.check input { width: auto; margin-top: 0.35rem; accent-color: var(--teal); }
+
+/* =========================================================
+   16. Floating contact button (bottom-right, all pages)
+   The Book button lives in the sticky header at the top, so nothing is covered.
+   ========================================================= */
+.fab { position: fixed; right: 1rem; bottom: 1rem; z-index: 150; display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+.fab-btn {
+  width: 3.4rem; height: 3.4rem; border-radius: 50%; border: none; cursor: pointer; font-size: 1.5rem;
+  background: var(--teal); color: var(--btn-text); box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.fab-btn:focus-visible { outline: 3px solid var(--rust); outline-offset: 3px; }
+.fab-menu {
+  background: var(--white); color: var(--sea); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 0.6rem; display: flex; flex-direction: column; gap: 0.3rem; min-width: 15rem;
+}
+.fab-menu[hidden] { display: none; }
+.fab-menu > a, .fab-menu > div { padding: 0.6rem 0.8rem; border-radius: 10px; color: var(--sea); text-decoration: none; }
+.fab-menu > a:hover { background: var(--sand); }
+.site-footer { padding-bottom: 5.5rem; }   /* room for the floating button */
+@media (max-width: 560px) {
+  .fab { right: 0.8rem; bottom: 0.8rem; }
+  .fab-menu { min-width: 0; width: calc(100vw - 1.6rem); }
+}
+.faq-item h3 { font: inherit; margin: 0; }
+
+/* =========================================================
+   17. Live chat (js/chat.js) – merged with the floating contact button
+   ========================================================= */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.fab-btn { position: relative; }
+.fab-badge {
+  position: absolute; top: -4px; right: -4px; min-width: 1.4rem; height: 1.4rem; padding: 0 0.35rem;
+  border-radius: 999px; background: #b4472e; color: #ffffff; font-size: 0.8rem; font-weight: 700;
+  display: grid; place-items: center; border: 2px solid var(--sand);
+}
+.fab-badge[hidden] { display: none; }
+.fab-chat {
+  font: inherit; text-align: left; cursor: pointer; border: none; background: var(--teal); color: var(--btn-text);
+  padding: 0.6rem 0.8rem; border-radius: 10px; font-weight: 600;
+}
+.fab-chat:hover { filter: brightness(1.08); }
+.fab-chat[hidden] { display: none; }
+
+.chat-panel {
+  position: fixed; right: 1rem; bottom: 5.4rem; z-index: 160; padding: 0; /* not the normal section padding */
+  width: min(380px, calc(100vw - 2rem)); max-height: min(620px, calc(100vh - 7rem));
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--white); color: var(--sea); border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3); border: 1px solid var(--sand-dark);
+}
+.chat-panel[hidden] { display: none; }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.1rem; background: var(--navy); color: var(--cream); }
+.chat-head h2 { font-size: 1.3rem; margin: 0; }
+.chat-sub { font-size: 0.85rem; color: #c9d3da; }
+.chat-close { background: none; border: none; color: var(--cream); font-size: 1.3rem; cursor: pointer; padding: 0.3rem 0.5rem; border-radius: 8px; }
+.chat-close:focus-visible, .chat-send-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.chat-note { font-size: 0.85rem; color: var(--muted); padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--sand-dark); }
+.chat-start { padding: 1rem 1.1rem; overflow-y: auto; }
+.chat-start[hidden], .chat-body[hidden], .chat-send[hidden], .chat-closed[hidden] { display: none; }
+.chat-body { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.chat-log { list-style: none; flex: 1; overflow-y: auto; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 200px; }
+.chat-msg { max-width: 82%; padding: 0.55rem 0.8rem; border-radius: 14px; line-height: 1.45; }
+.chat-msg p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.chat-msg time { display: block; font-size: 0.72rem; opacity: 0.75; margin-top: 0.15rem; }
+.from-visitor { align-self: flex-end; background: var(--teal); color: var(--btn-text); border-bottom-right-radius: 4px; }
+.from-admin { align-self: flex-start; background: var(--sand); color: var(--sea); border-bottom-left-radius: 4px; }
+.chat-closed { padding: 0.8rem 1.1rem; color: var(--muted); border-top: 1px solid var(--sand-dark); }
+.chat-new { font: inherit; background: none; border: none; color: var(--teal); text-decoration: underline; cursor: pointer; }
+.chat-send { display: flex; gap: 0.5rem; padding: 0.7rem; border-top: 1px solid var(--sand-dark); }
+.chat-send textarea { resize: none; flex: 1; padding: 0.6rem 0.8rem; }
+.chat-send-btn { flex: none; width: 2.8rem; border: none; border-radius: 10px; background: #b4472e; color: #ffffff; font-size: 1.1rem; cursor: pointer; }
+.chat-error { font-size: 0.85rem; color: var(--rust); padding: 0 1.1rem; }
+.chat-error:not(:empty) { padding: 0.5rem 1.1rem 0.8rem; }
+
+/* phone: the chat fills the screen */
+@media (max-width: 560px) {
+  .chat-panel { inset: 0; width: 100%; max-height: none; height: 100%; height: 100dvh; border-radius: 0; border: none; }
+  body.chat-open { overflow: hidden; }
+  body.chat-open .fab { display: none; }
+}

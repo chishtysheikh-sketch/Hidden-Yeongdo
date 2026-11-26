@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Hidden Yeongdo</title>
+  <!-- not for search engines, not linked anywhere on the site -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap">
+  <!-- Day/night mode: same as the public pages -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "day" && t !== "night") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+  <header class="site-header">
+    <nav class="nav container" aria-label="Admin">
+      <a class="logo" href="index.html">HIDDEN YEONGDO <span class="admin-tag">admin</span></a>
+      <div class="nav-tools">
+        <button class="btn btn-sm btn-ghost" type="button" id="notify-btn" hidden>🔔 Notifications</button>
+        <button class="theme-btn" type="button" aria-pressed="false" aria-label="Switch to night mode">🌙</button>
+        <button class="btn btn-sm" type="button" id="logout-btn" hidden>Log out</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container admin-main">
+    <p class="admin-msg" id="admin-msg" role="status"></p>
+
+    <!-- 1. Login -->
+    <form id="login-form" class="admin-card login-card" novalidate hidden>
+      <h1>Admin login</h1>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input id="login-email" name="email" type="email" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn" type="submit">Log in</button>
+      <p class="error" id="login-error" role="alert"></p>
+    </form>
+
+    <!-- 2. Logged in, but not the admin -->
+    <div id="no-access" class="admin-card" hidden>
+      <h1>No access</h1>
+      <p>This account is not the Hidden Yeongdo admin.</p>
+    </div>
+
+    <!-- 3. Dashboard -->
+    <div id="dashboard" hidden>
+      <div class="tabs admin-tabs" role="tablist" aria-label="Admin sections">
+        <button class="tab active" role="tab" aria-selected="true" aria-controls="panel-bookings" id="tab-bookings" data-hash="bookings">Bookings <span class="count" id="count-bookings"></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-questions" id="tab-questions" data-hash="questions">Questions <span class="count" id="count-questions"></span></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-chat" id="tab-chat" data-hash="chat">Live chat <span class="count" id="count-chat"></span></button>
+      </div>
+
+      <!-- Bookings -->
+      <section class="tab-panel active admin-panel" id="panel-bookings" role="tabpanel" aria-labelledby="tab-bookings">
+        <div class="admin-toolbar">
+          <label>Status
+            <select id="booking-filter">
+              <option value="all">All</option>
+              <option value="new">New</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+          <label>Sort
+            <select id="booking-sort">
+              <option value="created">Newest request first</option>
+              <option value="tour">Tour date (soonest first)</option>
+            </select>
+          </label>
+          <button class="btn btn-sm btn-ghost" type="button" id="booking-refresh">↻ Refresh</button>
+          <button class="btn btn-sm btn-ghost" type="button" id="booking-csv">⬇ CSV</button>
+        </div>
+        <div id="booking-list" class="admin-list"></div>
+      </section>
+
+      <!-- Questions -->
+      <section class="tab-panel admin-panel" id="panel-questions" role="tabpanel" aria-labelledby="tab-questions">
+        <div class="admin-toolbar">
+          <label>Status
+            <select id="question-filter">
+              <option value="all">All</option>
+              <option value="new">New</option>
+              <option value="answered">Answered</option>
+            </select>
+          </label>
+          <button class="btn btn-sm btn-ghost" type="button" id="question-refresh">↻ Refresh</button>
+          <button class="btn btn-sm btn-ghost" type="button" id="question-csv">⬇ CSV</button>
+        </div>
+        <div id="question-list" class="admin-list"></div>
+      </section>
+
+      <!-- Live chat -->
+      <section class="tab-panel admin-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">
+        <div class="chat-admin">
+          <div class="conv-list-wrap">
+            <ul class="conv-list" id="conv-list" aria-label="Conversations"></ul>
+          </div>
+          <div class="conv-view" id="conv-view" hidden>
+            <div class="conv-head">
+              <button type="button" class="conv-back" id="conv-back" aria-label="Back to the list">←</button>
+              <div class="conv-who" id="conv-who"></div>
+              <button type="button" class="btn btn-sm btn-ghost" id="conv-close">Close chat</button>
+            </div>
+            <ol class="chat-log admin-log" id="admin-log" role="log" aria-live="polite" aria-label="Messages"></ol>
+            <form class="chat-send" id="admin-send" novalidate>
+              <label class="sr-only" for="admin-input">Your reply</label>
+              <textarea id="admin-input" rows="2" maxlength="1000" placeholder="Reply… (Enter to send, Shift+Enter for a new line)"></textarea>
+              <button type="submit" class="chat-send-btn" aria-label="Send reply">➤</button>
+            </form>
+            <p class="chat-error" id="admin-chat-error" role="alert"></p>
+          </div>
+          <p class="conv-empty" id="conv-empty">Choose a conversation.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
